@@ -7,14 +7,14 @@
 # Uncomment the commands below if you're running this from a newly created server
 #========================================================================================#
 
-# # Uncomment this if you want to create a swapfile
-# # 4G means 4GB of disk space
-# # You can use M to denote MB
-# fallocate -l 4G /swapfile
-# chmod 600 /swapfile
-# mkswap /swapfile
-# swapon /swapfile
-# echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
+# Uncomment this if you want to create a swapfile
+# 4G means 4GB of disk space
+# You can use M to denote MB
+fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
 
 # # Uncomment this if you want to change the port of SSH
 # # You can use ports other than 22
@@ -83,14 +83,24 @@ cp .env.example .env
 #========================================================================================#
 
 # Remove the current GeyserMC and Floodgate plugins
-rm ./data/plugins/Geyser-Spigot.jar ./data/plugins/floodgate-spigot.jar
+rm -f ./data/plugins/Geyser-Spigot.jar ./data/plugins/floodgate-spigot.jar
 
 # Download the latest GeyserMC and Floodgate plugins
 curl -L -o ./data/plugins/Geyser-Spigot.jar https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot --keepalive-time 60
 curl -L -o ./data/plugins/floodgate-spigot.jar https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot --keepalive-time 60
 
+# Custom plugins
+curl -L -o ./data/plugins/ViaVersion.jar https://hangarcdn.papermc.io/plugins/ViaVersion/ViaVersion/versions/5.1.1/PAPER/ViaVersion-5.1.1.jar --keepalive-time 60
+curl -L -o ./data/plugins/ServerEssentials.jar https://mediafilez.forgecdn.net/files/5891/12/ServerEssentials-Bukkit.jar --keepalive-time 60
+curl -L -o ./data/plugins/LuckPerms.jar https://download.luckperms.net/1561/bukkit/loader/LuckPerms-Bukkit-5.4.146.jar --keepalive-time 60
+curl -L -o ./data/plugins/WorldEdit.jar https://mediafilez.forgecdn.net/files/5830/450/worldedit-bukkit-7.3.8.jar --keepalive-time 60
+curl -L -o ./data/plugins/SpawnerSilk.jar https://mediafilez.forgecdn.net/files/5491/938/spawner-silk-5.8.0.jar --keepalive-time 60
+curl -L -o ./data/plugins/DeadChest.jar https://mediafilez.forgecdn.net/files/5502/330/dead-chest-4.21.1.jar --keepalive-time 60
+curl -L -o ./data/plugins/Clearlag.jar https://mediafilez.forgecdn.net/files/3198/633/Clearlag.jar --keepalive-time 60
+
 # Add a symbolic link for the key file
 cd data/plugins
+
 ln -s ../floodgate/key.pem Geyser-Spigot/key.pem
 cd ../..
 

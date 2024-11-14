@@ -15,7 +15,7 @@ docker-compose down
 #========================================================================================#
 
 # Remove the current GeyserMC and Floodgate plugins
-rm ./data/plugins/Geyser-Spigot.jar ./data/plugins/floodgate-spigot.jar
+rm -f ./data/plugins/Geyser-Spigot.jar ./data/plugins/floodgate-spigot.jar
 
 # Download the latest GeyserMC and Floodgate plugins
 curl -L -o ./data/plugins/Geyser-Spigot.jar https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot --keepalive-time 60
