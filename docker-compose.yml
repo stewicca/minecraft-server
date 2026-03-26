@@ -47,6 +47,7 @@ services:
             RWA_ADMIN: "TRUE"
         ports:
             - ${RCON_WEB_PORT}:4326
+            - 4327:4327
         depends_on:
             - minecraft-server
         networks:
