@@ -31,6 +31,14 @@ services:
         networks:
             - minecraft-network
 
+    playit:
+        image: ghcr.io/playit-cloud/playit-agent:0.17
+        container_name: minecraft-playit
+        restart: always
+        network_mode: host
+        environment:
+            SECRET_KEY: "${PLAYIT_SECRET}"
+
 networks:
     minecraft-network:
         name: minecraft-network
