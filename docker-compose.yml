@@ -23,11 +23,32 @@ services:
             PVP: "${PVP}"
             INIT_MEMORY: "${INIT_MEMORY}"
             MAX_MEMORY: "${MAX_MEMORY}"
+            ENABLE_RCON: "TRUE"
+            RCON_PORT: 25575
+            RCON_PASSWORD: "${RCON_PASSWORD}"
         ports:
             - ${BEDROCK_PORT}:19132/udp
             - ${JAVA_PORT}:25565/tcp
         volumes:
             - ./data:/data
+        networks:
+            - minecraft-network
+
+    rcon-web-admin:
+        image: itzg/rcon
+        container_name: minecraft-rcon
+        restart: always
+        environment:
+            RWA_USERNAME: "${RCON_WEB_USER}"
+            RWA_PASSWORD: "${RCON_WEB_PASSWORD}"
+            RWA_RCON_HOST: minecraft-server
+            RWA_RCON_PORT: 25575
+            RWA_RCON_PASSWORD: "${RCON_PASSWORD}"
+            RWA_ADMIN: "TRUE"
+        ports:
+            - ${RCON_WEB_PORT}:4326
+        depends_on:
+            - minecraft-server
         networks:
             - minecraft-network
 
