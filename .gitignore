@@ -1,8 +1,46 @@
+# === Secrets & Environment ===
 .env
+
+# === Runtime Data (./data/) ===
+# Strategy: ignore data/ entirely, then surgically un-ignore only the plugin
+# config files we want to track.  For gitignore negation to reach a file
+# inside an ignored directory every parent directory in the path must first
+# be un-ignored, then everything at that level re-ignored with *, and
+# finally the specific item un-ignored again.
+
+# 1. Ignore the whole data/ tree
+data/
+# Un-ignore data/ itself so git will descend into it
+!data/
+# Re-ignore everything directly inside data/
 data/*
-!data/plugins/
-data/plugins/SkinsRestorer/Skins
-data/plugins/SkinsRestorer/Players
-backups/*
-data/plugins/Geyser-Spigot.jar
-data/plugins/floodgate-spigot.jar
+# Un-ignore only the plugins/ subdirectory
+!data/plugins
+
+# 2. Re-ignore everything directly inside plugins/
+data/plugins/*
+# Un-ignore only the three plugin directories that have tracked configs
+!data/plugins/Geyser-Spigot
+!data/plugins/Geyser-Paper
+!data/plugins/floodgate
+
+# 3. Re-ignore everything inside each of those three directories,
+#    then un-ignore only config.yml
+data/plugins/Geyser-Spigot/*
+!data/plugins/Geyser-Spigot/config.yml
+
+data/plugins/Geyser-Paper/*
+!data/plugins/Geyser-Paper/config.yml
+
+data/plugins/floodgate/*
+!data/plugins/floodgate/config.yml
+
+# === Backups ===
+backups/
+
+# === OS & Editor Junk ===
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml

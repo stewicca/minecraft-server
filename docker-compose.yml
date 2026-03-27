@@ -5,7 +5,7 @@ services:
         restart: always
         environment:
             EULA: "TRUE"
-            TYPE: SPIGOT
+            TYPE: PAPER
             FORCE_GAMEMODE: "TRUE"
             TZ: "${TIMEZONE}"
             VERSION: "${VERSION}"

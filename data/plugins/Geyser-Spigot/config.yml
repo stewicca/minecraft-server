@@ -29,14 +29,14 @@ bedrock:
 java:
   # What type of authentication Bedrock players will be checked against when logging into the Java server.
   # Can be "floodgate" (see https://wiki.geysermc.org/floodgate/), "online", or "offline".
-  auth-type: floodgate
+  auth-type: online
 
 # MOTD settings
 motd:
   # The MOTD that will be broadcasted to Minecraft: Bedrock Edition clients. This is irrelevant if "passthrough-motd" is set to true.
   # If either of these are empty, the respective string will default to "Geyser"
-  primary-motd: SMP
-  secondary-motd: Survival Multiplayer
+  primary-motd: Geyser
+  secondary-motd: Another Geyser server.
 
   # Whether Geyser should relay the MOTD from the Java server to Bedrock players.
   passthrough-motd: true
@@ -50,7 +50,7 @@ motd:
 
   # Whether to use server API methods to determine the Java server's MOTD and ping passthrough.
   # There is no need to disable this unless your MOTD or player count does not appear properly.
-  integrated-ping-passthrough: false
+  integrated-ping-passthrough: true
 
   # How often to ping the Java server to refresh MOTD and player count, in seconds.
   # Only relevant if integrated-ping-passthrough is disabled.
@@ -59,7 +59,7 @@ motd:
 # Gameplay options that affect Bedrock players
 gameplay:
   # The server name that will be sent to Minecraft: Bedrock Edition clients. This is visible in both the pause menu and the settings menu.
-  server-name: SMP
+  server-name: Geyser
 
   # Allow a fake cooldown indicator to be sent. Bedrock players otherwise do not see a cooldown as they still use 1.8 combat.
   # Please note: with the integrated pack disabled, some users may see a black box during the cooldown sequence, like below:
