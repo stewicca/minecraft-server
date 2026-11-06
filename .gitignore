@@ -19,18 +19,14 @@ data/*
 
 # 2. Re-ignore everything directly inside plugins/
 data/plugins/*
-# Un-ignore only the three plugin directories that have tracked configs
+# Un-ignore only the plugin directories that have tracked configs
 !data/plugins/Geyser-Spigot
-!data/plugins/Geyser-Paper
 !data/plugins/floodgate
 
-# 3. Re-ignore everything inside each of those three directories,
+# 3. Re-ignore everything inside each of those directories,
 #    then un-ignore only config.yml
 data/plugins/Geyser-Spigot/*
 !data/plugins/Geyser-Spigot/config.yml
-
-data/plugins/Geyser-Paper/*
-!data/plugins/Geyser-Paper/config.yml
 
 data/plugins/floodgate/*
 !data/plugins/floodgate/config.yml
