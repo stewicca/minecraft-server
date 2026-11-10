@@ -16,6 +16,7 @@ services:
             - .env
         ports:
             - ${BEDROCK_PORT}:19132/udp
+            - ${BEDROCK_PORT}:19132/tcp
             - ${JAVA_PORT}:25565/tcp
         volumes:
             - ./data:/data

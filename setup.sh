@@ -1,7 +1,8 @@
 #!/bin/sh
 
-mkdir -p ./backups ./data/plugins
-chmod +x ./backup.sh ./update.sh
+mkdir -p ./backups ./data/plugins/Geyser-Spigot ./data/plugins/floodgate
+git checkout -- ./data/plugins/Geyser-Spigot/config.yml ./data/plugins/floodgate/config.yml 2>/dev/null || true
+chmod +x ./backup.sh ./update.sh ./reset.sh
 [ -f .env ] || cp .env.example .env
 
 . ./.env
