@@ -2,26 +2,13 @@
 
 mkdir -p ./backups ./data/plugins/Geyser-Spigot ./data/plugins/floodgate
 git checkout -- ./data/plugins/Geyser-Spigot/config.yml ./data/plugins/floodgate/config.yml 2>/dev/null || true
-chmod +x ./backup.sh ./update.sh ./reset.sh
+chmod +x ./backup.sh ./update.sh ./reset.sh ./plugins.sh
 [ -f .env ] || cp .env.example .env
 
 . ./.env
 sed -i "s|  server-name: .*|  server-name: \"${SERVER_NAME}\"|" ./data/plugins/Geyser-Spigot/config.yml
 
-rm -f ./data/plugins/Geyser-Paper.jar ./data/plugins/Geyser-Spigot.jar ./data/plugins/floodgate-spigot.jar
-
-VIAVERSION=$(curl -s https://hangar.papermc.io/api/v1/projects/ViaVersion/latestrelease)
-LUCKPERMS=$(curl -s https://metadata.luckperms.net/data/all | grep -o '"bukkit":"[^"]*"' | cut -d'"' -f4)
-ESSENTIALSX=$(curl -s https://api.github.com/repos/EssentialsX/Essentials/releases/latest | grep -o '"browser_download_url": "[^"]*"' | grep 'EssentialsX-[0-9]' | grep -v 'AntiBuild\|Chat\|Discord\|GeoIP\|Protect\|Spawn\|XMPP' | cut -d'"' -f4)
-VAULT=$(curl -s https://api.github.com/repos/MilkBowl/Vault/releases/latest | grep -o '"browser_download_url": "[^"]*\.jar"' | cut -d'"' -f4 | head -1)
-
-curl -L -o ./data/plugins/Geyser-Spigot.jar https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot --keepalive-time 60 &
-curl -L -o ./data/plugins/floodgate-spigot.jar https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot --keepalive-time 60 &
-curl -L -o ./data/plugins/ViaVersion.jar "https://hangarcdn.papermc.io/plugins/ViaVersion/ViaVersion/versions/${VIAVERSION}/PAPER/ViaVersion-${VIAVERSION}.jar" --keepalive-time 60 &
-curl -L -o ./data/plugins/LuckPerms.jar "${LUCKPERMS}" --keepalive-time 60 &
-curl -L -o ./data/plugins/EssentialsX.jar "${ESSENTIALSX}" --keepalive-time 60 &
-curl -L -o ./data/plugins/Vault.jar "${VAULT}" --keepalive-time 60 &
-wait
+./plugins.sh
 
 ln -sf ../floodgate/key.pem ./data/plugins/Geyser-Spigot/key.pem
 

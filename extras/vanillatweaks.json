@@ -1,0 +1,8 @@
+{
+  "type": "datapacks",
+  "version": "26.3",
+  "packs": {
+    "gameplay changes": ["graves", "anti creeper grief", "anti enderman grief", "anti ghast grief"],
+    "decorative/cosmetic": ["player head drops", "more mob heads"]
+  }
+}
