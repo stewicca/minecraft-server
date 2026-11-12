@@ -1,14 +1,16 @@
 #!/bin/sh
-# Download the latest version of every plugin into ./data/plugins.
-# Called by setup.sh and update.sh; the server must be stopped or restarted afterwards.
+# Download the latest version of the plugins we add on top of the Celestial Survival setup
+# (which brings its own ViaVersion, LuckPerms, EssentialsX, VaultUnlocked, ...) into ./data/plugins.
+# Called by setup.sh, update.sh and install-celestial.sh; the server must be restarted afterwards.
 
 command -v python3 >/dev/null || { echo "python3 is required by plugins.sh" >&2; exit 1; }
 
 PLUGINS=./data/plugins
 mkdir -p "$PLUGINS"
 
-# Jars left behind by older versions of these scripts
-rm -f "$PLUGINS/Geyser-Paper.jar"
+# Jars downloaded by older versions of this script; the Celestial setup ships its own copies
+rm -f "$PLUGINS/Geyser-Paper.jar" "$PLUGINS/ViaVersion.jar" "$PLUGINS/LuckPerms.jar" "$PLUGINS/EssentialsX.jar" \
+    "$PLUGINS/EssentialsXSpawn.jar" "$PLUGINS/Vault.jar" "$PLUGINS/CoreProtect.jar"
 
 # Latest release jar of a Modrinth project built for Paper (regardless of the Minecraft versions it lists)
 modrinth() {
@@ -22,11 +24,9 @@ github_asset() {
     curl -fsS "https://api.github.com/repos/$1/releases/latest" | grep -o '"browser_download_url": "[^"]*"' | cut -d'"' -f4 | grep "$2" | head -1
 }
 
-VIAVERSION=$(curl -fsS https://hangar.papermc.io/api/v1/projects/ViaVersion/latestrelease)
-LUCKPERMS=$(curl -fsS https://metadata.luckperms.net/data/all | grep -o '"bukkit":"[^"]*"' | cut -d'"' -f4)
-ESSENTIALSX=$(github_asset EssentialsX/Essentials '/EssentialsX-[0-9][^/]*\.jar$')
-ESSENTIALSX_SPAWN=$(github_asset EssentialsX/Essentials '/EssentialsXSpawn-[0-9][^/]*\.jar$')
-VAULT=$(github_asset MilkBowl/Vault '\.jar$')
+TAB=$(github_asset NEZNAMY/TAB '/TAB\.v[0-9.]*[0-9]\.jar$')
+ULTIMATESHOP=$(modrinth ultimateshop)
+AUTHME=$(modrinth authmereloaded)
 GSIT=$(modrinth gsit)
 CHUNKY=$(modrinth chunky)
 
@@ -41,11 +41,9 @@ download() {
 
 download Geyser-Spigot https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot &
 download floodgate-spigot https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot &
-download ViaVersion "${VIAVERSION:+https://hangarcdn.papermc.io/plugins/ViaVersion/ViaVersion/versions/${VIAVERSION}/PAPER/ViaVersion-${VIAVERSION}.jar}" &
-download LuckPerms "$LUCKPERMS" &
-download EssentialsX "$ESSENTIALSX" &
-download EssentialsXSpawn "$ESSENTIALSX_SPAWN" &
-download Vault "$VAULT" &
+download TAB "$TAB" &
+download UltimateShop "$ULTIMATESHOP" &
+download AuthMe "$AUTHME" &
 download GSit "$GSIT" &
 download Chunky "$CHUNKY" &
 wait

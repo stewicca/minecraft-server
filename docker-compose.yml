@@ -7,38 +7,23 @@ services:
         restart: unless-stopped
         environment:
             EULA: "TRUE"
-            TYPE: PAPER
+            # Celestial Survival runs on Purpur, see install-celestial.sh
+            TYPE: PURPUR
             FORCE_GAMEMODE: "TRUE"
             ENABLE_RCON: "TRUE"
             RCON_PORT: 25575
             RCON_PASSWORD: "${RCON_PASSWORD}"
             USE_AIKAR_FLAGS: "TRUE"
-            # Vanilla+ datapacks: graves, player & mob head drops
+            # Vanilla+ datapacks: graves, head drops, creeper/enderman/ghast anti-grief
             VANILLATWEAKS_FILE: /extras/vanillatweaks.json
-            # Re-applied on every start, so these settings are always in force
+            # Re-applied on every start, so these settings are always in force.
+            # Player permissions and ranks come from the Celestial LuckPerms setup.
             RCON_CMDS_STARTUP: |-
                 gamerule players_sleeping_percentage 0
-                lp group default permission set essentials.spawn true
-                lp group default permission set essentials.home true
-                lp group default permission set essentials.sethome true
-                lp group default permission set essentials.sethome.multiple true
-                lp group default permission set essentials.delhome true
-                lp group default permission set essentials.tpa true
-                lp group default permission set essentials.tpahere true
-                lp group default permission set essentials.tpaccept true
-                lp group default permission set essentials.tpdeny true
-                lp group default permission set essentials.tpacancel true
+                execute in minecraft:the_nether run worldborder set 6250
+                execute in minecraft:the_end run worldborder set 50000
                 lp group default permission set essentials.back true
                 lp group default permission set essentials.back.ondeath true
-                lp group default permission set essentials.msg true
-                lp group default permission set essentials.reply true
-                lp group default permission set essentials.ignore true
-                lp group default permission set essentials.list true
-                lp group default permission set essentials.me true
-                lp group default permission set essentials.afk true
-                lp group default permission set essentials.help true
-                lp group default permission set essentials.rules true
-                lp group default permission set essentials.motd true
         env_file:
             - .env
         ports:
